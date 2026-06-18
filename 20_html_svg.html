@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heart Beat Visualizer</title>
+
+<style>
+body{
+    background:#111;
+    color:white;
+    text-align:center;
+    font-family:Arial,sans-serif;
+}
+
+h1{
+    color:#ff4d6d;
+}
+
+.heart{
+    width:150px;
+    margin:20px auto;
+}
+
+#heartSvg{
+    width:150px;
+    height:150px;
+    transform-origin:center;
+    animation:beat 0.8s infinite;
+}
+
+@keyframes beat{
+    0%,100%{
+        transform:scale(1);
+    }
+    50%{
+        transform:scale(1.2);
+    }
+}
+
+#line{
+    fill:none;
+    stroke:#00ff99;
+    stroke-width:4;
+    stroke-dasharray:800;
+    stroke-dashoffset:800;
+    animation:pulse 2s linear infinite;
+}
+
+@keyframes pulse{
+    from{
+        stroke-dashoffset:800;
+    }
+    to{
+        stroke-dashoffset:0;
+    }
+}
+
+input{
+    width:250px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>❤️ Heart Beat Visualizer</h1>
+
+<div class="heart">
+    <svg id="heartSvg" viewBox="0 0 100 100">
+        <path
+            fill="#ff1744"
+            d="M50 90
+               L20 60
+               C0 40 5 10 30 10
+               C45 10 50 25 50 25
+               C50 25 55 10 70 10
+               C95 10 100 40 80 60
+               Z"/>
+    </svg>
+</div>
+
+<h2>
+    Heart Rate:
+    <span id="bpm">75</span> BPM
+</h2>
+
+<input type="range" min="50" max="150" value="75" id="slider">
+
+<br><br>
+
+<svg width="700" height="120" viewBox="0 0 700 120">
+    <path id="line"
+          d="M0 60
+             L100 60
+             L120 30
+             L140 90
+             L160 10
+             L180 100
+             L200 60
+             L350 60
+             L370 30
+             L390 90
+             L410 10
+             L430 100
+             L450 60
+             L700 60"/>
+</svg>
+
+<script>
+const slider = document.getElementById("slider");
+const bpm = document.getElementById("bpm");
+const heart = document.getElementById("heartSvg");
+
+slider.addEventListener("input", function () {
+    bpm.textContent = this.value;
+
+    // Duration per beat
+    const speed = 60 / this.value;
+    heart.style.animationDuration = speed + "s";
+});
+</script>
+
+</body>
+</html>
